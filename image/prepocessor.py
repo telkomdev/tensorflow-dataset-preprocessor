@@ -13,12 +13,21 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 IMAGE_DIR = os.path.join(BASE_DIR, 'data')
 MODEL_DIR = os.path.join(BASE_DIR, 'model/model.h5')
 
+'''
+save tensorflow trained model
+'''
 def save_model(model):
     model.save(MODEL_DIR)
 
+'''
+load tensorflow trained model from disk
+'''
 def load_model():
     return tf.keras.models.load_model(MODEL_DIR)
 
+'''
+get image from disk, and return as numpy array
+'''
 def get_image_normal(src, new_size=(50, 50)):
     pil_image = Image.open(src)
     
@@ -29,6 +38,9 @@ def get_image_normal(src, new_size=(50, 50)):
     img_array = np.array(pil_final_image, np.uint8)
     return img_array
 
+'''
+count all image file from IMAGE_DIR
+'''
 def count_files():
     types = ('*/*.*.jpg', '*/*.*.jpeg')
     files_grabbed = []
@@ -46,6 +58,9 @@ IMAGE_WIDTH = 150
 STEP_PER_EPOCH = np.ceil(IMAGES_COUNT / BATCH_SIZE)
 EPOCHS = 50
 
+'''
+show batch from train gen data
+'''
 def show_batch(image_batch, label_batch):
     plt.figure(figsize=(10, 10))
     for n in range(4):
@@ -56,6 +71,9 @@ def show_batch(image_batch, label_batch):
     plt.tight_layout()
     plt.show()
 
+'''
+create tensorflow model
+'''
 def create_model(input_shape):
 
     model = tf.keras.Sequential()
@@ -85,6 +103,9 @@ def create_model(input_shape):
     model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
     return model
 
+'''
+train and save tensorflow model to disk
+'''
 def train_model():
     # convert from uint8 to float32 in range [0,1].
     image_generator = tf.keras.preprocessing.image.ImageDataGenerator(rescale=1./255,
