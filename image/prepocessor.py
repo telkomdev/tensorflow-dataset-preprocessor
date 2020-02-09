@@ -197,7 +197,7 @@ def main():
 
     # img_proc.train_model()
 
-    test_model(img_proc, 'img2.jpg')
+    test_model(img_proc, 'img1.jpg')
 
 if __name__ == '__main__':
     main()
